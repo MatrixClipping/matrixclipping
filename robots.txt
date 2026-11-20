@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /entrar/
+Disallow: /cadastro/
+Disallow: /processar/
+
+Sitemap: https://matrixclipping.com.br/sitemap.xml
