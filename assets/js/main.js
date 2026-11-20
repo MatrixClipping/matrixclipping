@@ -307,11 +307,46 @@
     });
   }
 
+
+  // ---------------------------------------------------------
+  // CRIAR CONTA: aviso "Estamos em construção"
+  // ---------------------------------------------------------
+  function emConstrucao() {
+    if ($('.mc-modal')) return;
+    var m = document.createElement('div');
+    m.className = 'mc-modal';
+    m.innerHTML = '<div class="mc-modal-box" role="dialog" aria-modal="true" aria-labelledby="mcModalT">' +
+      '<button class="mc-modal-x" type="button" aria-label="Fechar">×</button>' +
+      '<div class="mc-modal-ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20h20M5 20V9l7-5 7 5v11"/><path d="M9 20v-6h6v6"/></svg></div>' +
+      '<h2 id="mcModalT">Estamos em construção</h2>' +
+      '<p>O MatrixPress está nos ajustes finais. Em breve você vai poder criar a sua conta e usar o MatrixShot, a MatrixAPI e o MatrixLink. Quer ser um dos primeiros? Fale com a gente.</p>' +
+      '<div class="cta-row"><a class="btn btn-primary" href="mailto:' + esc(C.email) + '?subject=' + encodeURIComponent('Quero conhecer a Matrix Clipping') + '">Falar com a gente</a><button class="btn btn-glass" type="button" data-fechar>Fechar</button></div>' +
+      '</div>';
+    function fechar() { m.remove(); document.removeEventListener('keydown', onKey); }
+    function onKey(e) { if (e.key === 'Escape') fechar(); }
+    m.addEventListener('click', function (e) { if (e.target === m || e.target.closest('.mc-modal-x,[data-fechar]')) fechar(); });
+    document.addEventListener('keydown', onKey);
+    document.body.appendChild(m);
+    var b = $('.mc-modal-box .btn-primary', m); if (b) b.focus();
+    track('em_construcao');
+  }
+  function wireCadastro() {
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('a[href]');
+      if (!a || !/cadastro\//.test(a.getAttribute('href'))) return;
+      e.preventDefault(); emConstrucao();
+    });
+    if ($('#signupForm')) {
+      emConstrucao();
+      $('#signupForm').addEventListener('submit', function (e) { e.preventDefault(); e.stopImmediatePropagation(); emConstrucao(); }, true);
+    }
+  }
+
   window.MC = { esc: esc, brl2: brl2, num: num, track: track, sleep: sleep, REDUCED: REDUCED };
 
   document.addEventListener('DOMContentLoaded', function () {
     wireLinks(); wireMenu(); wireHeader(); wireReveal();
     wireCanvas(); wireTilt(); wireAutoDemo(); wireProbe();
-    wireTabs(); wireBatch();
+    wireTabs(); wireBatch(); wireCadastro();
   });
 })();
