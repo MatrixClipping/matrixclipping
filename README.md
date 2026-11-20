@@ -7,8 +7,10 @@ igual no GitHub Pages, Cloudflare Pages, Netlify ou qualquer hospedagem de arqui
 
 | Página               | O que é |
 |----------------------|---------|
-| `index.html`         | Home: demonstração automática em loop, plataforma, métricas do veículo, preços, perguntas |
-| `precos/`            | Planos + comparativo completo |
+| `index.html`         | Home: demonstração automática, print em lote, explorador da plataforma, retorno de mídia, controle, perguntas |
+| `plataforma/`        | Todos os módulos da central e a API (página para busca: "ferramenta de clipping") |
+| `print-em-lote/`     | Print em lote e screenshot de notícias (página para busca: "print em lote") |
+| `precos/`            | Endereço antigo: redireciona para `plataforma/` |
 | `processar/`         | Tela da plataforma: processa um link (recebe `?url=` vindo da home) |
 | `cadastro/`          | Criar conta |
 | `entrar/`            | Login |
@@ -20,8 +22,8 @@ igual no GitHub Pages, Cloudflare Pages, Netlify ou qualquer hospedagem de arqui
 /
 ├── assets/
 │   ├── css/main.css        Estilo (cores da marca no topo, em :root)
-│   ├── js/config.js        ← EDITE AQUI: e-mail, preços, planos, apiBase
-│   ├── js/main.js          Fundo animado, painel 3D, demo automática, preços, menu
+│   ├── js/config.js        ← EDITE AQUI: e-mail, apiBase, exemplo da demonstração
+│   ├── js/main.js          Fundo animado, painel 3D, demo automática, lote, abas, menu
 │   ├── js/processar.js     Tela Processar (modo demonstração ou API)
 │   ├── js/auth.js          Cadastro e login (modo demonstração ou API)
 │   └── img/                logo.png, logo@2x.png, favicon.ico, favicon-32.png, apple-touch-icon.png, icon-*.png
@@ -42,7 +44,6 @@ Os endpoints esperados estão em `docs/API.md`.
 
 | Quero mudar…                     | Onde |
 |----------------------------------|------|
-| Preço, links, usuários, recursos | `config.js` → `plans` |
 | Desconto anual                   | `config.js` → `annualDiscount` |
 | Tabela comparativa               | `config.js` → `comparison` |
 | E-mail de contato                | `config.js` → `email` |

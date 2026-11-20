@@ -31,14 +31,12 @@
   function wireSignup() {
     var form = $('#signupForm'); if (!form) return;
     var out = $('#signupMsg');
-    var plano = new URLSearchParams(location.search).get('plano');
-    if (plano && form.plano) form.plano.value = plano;
 
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
       if (!fieldsOk(form, out)) return;
       if (form.senha.value !== form.senha2.value) { form.senha2.focus(); msg(out, 'As senhas não conferem.', false); return; }
-      var data = { nome: form.nome.value.trim(), empresa: form.empresa.value.trim(), email: form.email.value.trim(), senha: form.senha.value, plano: form.plano.value };
+      var data = { nome: form.nome.value.trim(), empresa: form.empresa.value.trim(), email: form.email.value.trim(), senha: form.senha.value, volume: form.volume.value };
       if (!C.apiBase) {
         msg(out, 'Tudo certo com os dados. O cadastro será ativado no lançamento da plataforma; nada foi enviado ainda.', true);
         return;

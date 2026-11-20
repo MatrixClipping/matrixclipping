@@ -1,6 +1,6 @@
 /* =========================================================
    MATRIX CLIPPING — SCRIPT PRINCIPAL
-   Fundo animado, painel 3D, degustação, preços, menu.
+   Fundo animado, painel 3D, demonstração, lote, abas, menu.
    Configurações em assets/js/config.js
    ========================================================= */
 
@@ -12,8 +12,8 @@
 
   var $ = function (sel, root) { return (root || document).querySelector(sel); };
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
-  var brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: C.currency || 'BRL', maximumFractionDigits: 0 });
-  var brl2 = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: C.currency || 'BRL', minimumFractionDigits: 2 });
+  var brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+  var brl2 = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 });
   var num = new Intl.NumberFormat('pt-BR');
   var sleep = function (ms) { return new Promise(function (r) { setTimeout(r, REDUCED ? 0 : ms); }); };
 
@@ -237,57 +237,74 @@
     input.addEventListener('input', function () { input.setCustomValidity(''); });
   }
 
-  // ---------------------------------------------------------
-  // PREÇOS
-  // ---------------------------------------------------------
-  var billing = 'monthly';
-  function planPrice(p) { return billing === 'annual' ? Math.round(p.monthly * (1 - (C.annualDiscount || 0))) : p.monthly; }
 
-  function renderPlans() {
-    var box = $('#plans'); if (!box || !C.plans) return;
-    box.innerHTML = C.plans.map(function (p) {
-      var price = planPrice(p);
-      var sub = billing === 'annual' ? 'cobrado anualmente: ' + brl.format(price * 12) + '/ano' : 'cobrança mensal, cancele quando quiser';
-      var href = p.contact
-        ? 'mailto:' + C.email + '?subject=' + encodeURIComponent('Plano ' + p.name + ' - Matrix Clipping')
-        : SIGNUP + '?plano=' + encodeURIComponent(p.id);
-      var ext = '';
-      return '<article class="plan' + (p.highlight ? ' highlight' : '') + '">' +
-        (p.badge ? '<span class="badge">' + esc(p.badge) + '</span>' : '') +
-        '<h3>' + esc(p.name) + '</h3><p class="tagline">' + esc(p.tagline) + '</p>' +
-        '<div class="price"><strong>' + esc(brl.format(price)) + '</strong><span>/mês</span></div>' +
-        '<p class="price-sub">' + esc(sub) + '</p>' +
-        '<div class="plan-facts"><div><small>Links/mês</small><b>' + esc(num.format(p.links)) + '</b></div><div><small>Usuários</small><b>' + esc(p.users ? p.users : 'Ilimitados') + '</b></div></div>' +
-        '<ul>' + p.features.map(function (f) { return '<li>' + esc(f) + '</li>'; }).join('') + '</ul>' +
-        '<a class="btn ' + (p.highlight ? 'btn-primary' : 'btn-dark') + ' btn-block" data-plan="' + esc(p.id) + '" href="' + esc(href) + '"' + ext + '>' + esc(p.cta) + '</a>' +
-        '<p class="extra">link adicional ' + esc(brl2.format(p.extraLink)) + ' · ≈ ' + esc(brl2.format(price / p.links)) + '/link</p>' +
-        '</article>';
-    }).join('');
-    $$('[data-plan]', box).forEach(function (a) { a.addEventListener('click', function () { track('plano_click', { plano: a.getAttribute('data-plan'), cobranca: billing }); }); });
-  }
-  function wireBilling() {
-    var buttons = $$('[data-billing]'); if (!buttons.length) return;
-    $$('[data-discount]').forEach(function (el) { el.textContent = '−' + Math.round((C.annualDiscount || 0) * 100) + '%'; });
-    buttons.forEach(function (b) {
-      b.addEventListener('click', function () {
-        billing = b.getAttribute('data-billing');
-        buttons.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
-        renderPlans(); track('cobranca_toggle', { cobranca: billing });
+  // ---------------------------------------------------------
+  // ABAS (explorador da plataforma, retorno de mídia)
+  // [data-tabs] com botões [data-tab] e painéis [data-panel]; data-auto="ms" gira sozinho
+  // ---------------------------------------------------------
+  function wireTabs() {
+    $$('[data-tabs]').forEach(function (box) {
+      var btns = $$('[data-tab]', box), panels = $$('[data-panel]', box), timer = null, visible = true, user = false;
+      function show(id) {
+        btns.forEach(function (b) { var on = b.getAttribute('data-tab') === id; b.classList.toggle('on', on); b.setAttribute('aria-selected', String(on)); });
+        panels.forEach(function (p) { var on = p.getAttribute('data-panel') === id; p.hidden = !on; if (on) { p.classList.remove('enter'); void p.offsetWidth; p.classList.add('enter'); } });
+      }
+      btns.forEach(function (b) {
+        b.addEventListener('click', function () { user = true; clearInterval(timer); show(b.getAttribute('data-tab')); track('aba', { aba: b.getAttribute('data-tab') }); });
       });
+      var ms = +box.getAttribute('data-auto');
+      if (ms && !REDUCED) {
+        if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }, { threshold: .3 }).observe(box);
+        timer = setInterval(function () {
+          if (user || !visible || document.hidden) return;
+          var i = btns.findIndex(function (b) { return b.classList.contains('on'); });
+          show(btns[(i + 1) % btns.length].getAttribute('data-tab'));
+        }, ms);
+      }
     });
   }
-  function renderComparison() {
-    var table = $('#compareTable'); if (!table || !C.comparison) return;
-    var head = '<thead><tr><th scope="col">Recurso</th>' + C.plans.map(function (p) { return '<th scope="col"' + (p.highlight ? ' class="hl"' : '') + '>' + esc(p.name) + '</th>'; }).join('') + '</tr></thead>';
-    var body = '<tbody>' + C.comparison.map(function (row) {
-      if (row.group) return '<tr class="group"><td colspan="' + (C.plans.length + 1) + '">' + esc(row.group) + '</td></tr>';
-      return '<tr><td>' + esc(row.label) + '</td>' + row.values.map(function (v) {
-        if (v === true) return '<td><span class="yes" aria-label="Incluído">✓</span></td>';
-        if (v === false) return '<td><span class="no" aria-label="Não incluído">—</span></td>';
-        return '<td>' + esc(v) + '</td>';
-      }).join('') + '</tr>';
-    }).join('') + '</tbody>';
-    table.innerHTML = head + body;
+
+  // ---------------------------------------------------------
+  // PRINT EM LOTE: simulação de vários lotes em paralelo, com revezamento
+  // ---------------------------------------------------------
+  function wireBatch() {
+    $$('[data-batch]').forEach(function (box) {
+      var lanes = $$('.lane', box).map(function (el) { return { el: el, total: +el.getAttribute('data-total'), done: 0, bar: $('.lane-bar i', el), n: $('.lane-n', el), st: $('.lane-st', el) }; });
+      var tiles = $$('.tiles i', box), total = lanes.reduce(function (a, l) { return a + l.total; }, 0);
+      var clock = $('.batch-clock', box), visible = true, t0 = 0;
+      var COLORS = ['l1', 'l2', 'l3'];
+      if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }, { threshold: .2 }).observe(box);
+      function paint() {
+        var sum = 0;
+        lanes.forEach(function (l) {
+          sum += l.done;
+          l.bar.style.width = (100 * l.done / l.total) + '%';
+          l.n.textContent = num.format(Math.floor(l.done)) + ' / ' + num.format(l.total);
+          var fin = l.done >= l.total;
+          l.el.classList.toggle('fin', fin);
+          l.st.textContent = fin ? 'concluído' : (l.done > 0 ? 'processando' : 'na fila');
+        });
+        var lit = Math.floor(tiles.length * sum / total);
+        tiles.forEach(function (t, i) { if (i < lit && !t.className) t.className = COLORS[i % 3]; if (i >= lit) t.className = ''; });
+        if (clock) clock.textContent = num.format(Math.floor(sum)) + ' de ' + num.format(total) + ' prints';
+      }
+      function reset() { lanes.forEach(function (l) { l.done = 0; }); tiles.forEach(function (t) { t.className = ''; }); paint(); }
+      if (REDUCED) { lanes.forEach(function (l) { l.done = l.total; }); paint(); return; }
+      var CAP = total / 210;                       // ~ 210 quadros por ciclo
+      function step() {
+        if (!visible || document.hidden) return setTimeout(step, 400);
+        var open = lanes.filter(function (l) { return l.done < l.total; });
+        if (!open.length) { return setTimeout(function () { reset(); setTimeout(step, 900); }, 2600); }
+        var cap = CAP, share;
+        while (cap > 0.01 && open.length) {          // revezamento: cada lote recebe a mesma fatia
+          share = cap / open.length; cap = 0;
+          open.forEach(function (l) { var room = l.total - l.done, take = Math.min(room, share); l.done += take; cap += share - take; });
+          open = open.filter(function (l) { return l.done < l.total; });
+        }
+        paint(); setTimeout(step, 55);
+      }
+      reset(); setTimeout(step, 800);
+    });
   }
 
   window.MC = { esc: esc, brl2: brl2, num: num, track: track, sleep: sleep, REDUCED: REDUCED };
@@ -295,6 +312,6 @@
   document.addEventListener('DOMContentLoaded', function () {
     wireLinks(); wireMenu(); wireHeader(); wireReveal();
     wireCanvas(); wireTilt(); wireAutoDemo(); wireProbe();
-    renderPlans(); wireBilling(); renderComparison();
+    wireTabs(); wireBatch();
   });
 })();

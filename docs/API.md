@@ -6,7 +6,7 @@ Este é o contrato que o site já usa. Quando o backend implementar estes endpoi
 
 - Formato: JSON (UTF-8). Datas no formato `dd/mm/aaaa hh:mm` para exibição.
 - Autenticação: cookie de sessão `HttpOnly` + `Secure` + `SameSite=Lax` (o site envia `credentials: 'include'`).
-  Para integrações de clientes (plano Profissional/Agência), também aceitar `Authorization: Bearer <chave>`.
+  Para integrações de clientes, também aceitar `Authorization: Bearer <chave>`.
 - CORS: liberar `https://matrixclipping.com.br` com `Access-Control-Allow-Credentials: true`.
 - Erros: HTTP 4xx/5xx com `{ "erro": "mensagem legível em português" }`.
 
@@ -16,7 +16,7 @@ Este é o contrato que o site já usa. Quando o backend implementar estes endpoi
 
 ### `POST /v1/auth/cadastro`
 ```json
-{ "nome": "Maria", "empresa": "Clipadora X", "email": "maria@clipadora.com.br", "senha": "********", "plano": "profissional" }
+{ "nome": "Maria", "empresa": "Clipadora X", "email": "maria@clipadora.com.br", "senha": "********", "volume": "500-3000" }
 ```
 Resposta `201`: `{ "ok": true }` — envia e-mail de confirmação.
 Erros: `409` e-mail já cadastrado · `422` dados inválidos.
@@ -25,7 +25,7 @@ Erros: `409` e-mail já cadastrado · `422` dados inválidos.
 ```json
 { "email": "maria@clipadora.com.br", "senha": "********", "lembrar": true }
 ```
-Resposta `200`: `{ "usuario": { "nome": "Maria", "empresa": "Clipadora X", "plano": "profissional" } }` + cookie de sessão.
+Resposta `200`: `{ "usuario": { "nome": "Maria", "empresa": "Clipadora X" } }` + cookie de sessão.
 Erros: `401` e-mail ou senha incorretos · `429` muitas tentativas.
 
 ### `POST /v1/auth/logout` → `204`
@@ -43,7 +43,7 @@ Resposta `202`:
 ```json
 { "id": "mat_01JD9X…", "status": "na_fila" }
 ```
-Erros: `402` limite do plano atingido sem link adicional · `422` URL inválida.
+Erros: `429` limite mensal atingido (quando o bloqueio estiver ativo) · `422` URL inválida.
 
 ### `POST /v1/materias/lote` — planilha/lista de links
 ```json
@@ -94,7 +94,7 @@ Quando `status = "concluido"`, `resultado` traz:
   "tempo": "6,4 s"
 }
 ```
-`metricas` só vem preenchido nos planos com esse recurso **e** quando houver licença do provedor de dados de audiência.
+`metricas` só vem preenchido para contas com o pacote de audiência **e** quando houver licença do provedor de dados de audiência.
 
 ### `GET /v1/materias?pagina=1&cliente=Empresa%20X` — histórico paginado
 ### `GET /v1/materias/{id}/exportar?formato=pdf|jpg|xlsx|json`
@@ -105,15 +105,15 @@ Quando `status = "concluido"`, `resultado` traz:
 
 | id           | O que faz                                                        |
 |--------------|------------------------------------------------------------------|
-| `fila`       | Recebe o pedido, confere o limite do plano, coloca na fila        |
+| `fila`       | Recebe o pedido, confere o limite mensal, coloca na fila        |
 | `leitura`    | Abre a página (navegador headless), fecha banners de cookies       |
 | `extracao`   | Título, texto limpo, autor, seção, data, veículo                 |
 | `print`      | Print da página e recorte da área da matéria                     |
 | `medidas`    | Altura × largura (px) e centimetragem equivalente                |
 | `retorno`    | Aplica a tabela de preços do veículo cadastrada pela clipadora   |
-| `sentimento` | IA: sentimento em relação ao cliente, confiança e justificativa  |
+| `sentimento` | Sentimento em relação ao cliente, confiança e justificativa      |
 | `veiculo`    | Métricas de audiência do veículo (cache por domínio)             |
 
-## Webhook (plano Agência)
+## Webhook
 `POST` para a URL cadastrada pelo cliente a cada matéria concluída, com o mesmo corpo de
 `GET /v1/materias/{id}` e o cabeçalho `X-Matrix-Assinatura` (HMAC-SHA256 do corpo).

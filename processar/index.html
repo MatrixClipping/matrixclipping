@@ -17,6 +17,7 @@
 <meta property="og:description" content="Processe uma matéria na Matrix Clipping.">
 <meta property="og:url" content="https://matrixclipping.com.br/processar/">
 <meta property="og:image" content="https://matrixclipping.com.br/assets/img/icon-512.png">
+<meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
@@ -28,11 +29,12 @@
 <header class="site-header">
   <div class="container header-inner">
     <a class="logo" href="../index.html" aria-label="Página inicial">
-      <img src="../assets/img/logo.png" srcset="../assets/img/logo.png 1x, ../assets/img/logo@2x.png 2x" alt="Matrix Clipping, ferramentas para clipping" width="460" height="120">
+      <img src="../assets/img/logo.png" srcset="../assets/img/logo.png 1x, ../assets/img/logo@2x.png 2x" alt="Matrix Clipping, ferramenta de clipping" width="460" height="120">
     </a>
     <nav class="nav" aria-label="Principal">
-      <a href="../index.html#plataforma">Plataforma</a>
-      <a href="../precos/index.html">Preços</a>
+      <a href="../plataforma/index.html">Plataforma</a>
+      <a href="../print-em-lote/index.html">Print em lote</a>
+      <a href="../index.html#retorno">Retorno de mídia</a>
       <a href="../index.html#perguntas">Perguntas</a>
     </nav>
     <div class="header-actions">
@@ -44,8 +46,9 @@
     </div>
   </div>
   <nav class="mobile-nav" id="mobileNav" aria-label="Menu móvel" hidden>
-    <a href="../index.html#plataforma">Plataforma</a>
-    <a href="../precos/index.html">Preços</a>
+    <a href="../plataforma/index.html">Plataforma</a>
+    <a href="../print-em-lote/index.html">Print em lote</a>
+    <a href="../index.html#retorno">Retorno de mídia</a>
     <a href="../index.html#perguntas">Perguntas</a>
     <a href="../entrar/index.html">Entrar</a>
   </nav>
@@ -81,7 +84,7 @@
             <li data-step="print"><span class="st"></span><b>Capturando o print</b><small class="t"></small></li>
             <li data-step="medidas"><span class="st"></span><b>Medindo a matéria</b><small class="t"></small></li>
             <li data-step="retorno"><span class="st"></span><b>Calculando o retorno</b><small class="t"></small></li>
-            <li data-step="sentimento"><span class="st"></span><b>Analisando o sentimento</b><small class="t"></small></li>
+            <li data-step="sentimento"><span class="st"></span><b>Classificando o sentimento</b><small class="t"></small></li>
             <li data-step="veiculo"><span class="st"></span><b>Métricas do veículo</b><small class="t"></small></li>
         </ol>
         <div class="job-meta" id="jobMeta"></div>
@@ -112,7 +115,7 @@
               <div class="kpi"><small>Retorno de mídia</small><b id="rRetorno"></b></div>
               <div class="kpi"><small>Centimetragem</small><b id="rCm"></b></div>
               <div class="kpi"><small>Altura × largura</small><b id="rPx"></b></div>
-              <div class="kpi"><small>Confiança da IA</small><b id="rConf"></b></div>
+              <div class="kpi"><small>Confiança</small><b id="rConf"></b></div>
             </div>
           </div>
 
@@ -120,10 +123,10 @@
           <div class="res-block"><h3>Por que esse sentimento</h3><p id="rJust"></p></div>
 
           <div class="res-block">
-            <h3>Métricas do veículo <span class="pro"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Assinantes</span></h3>
+            <h3>Métricas do veículo <span class="pro"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Assinantes</span></h3>
             <div class="vehicle-card inline">
               <div class="metrics locked" id="rMetricas" aria-hidden="true"></div>
-              <div class="lock-overlay"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><strong>Disponível nos planos Profissional e Agência</strong><small>Valores ilustrativos</small></div>
+              <div class="lock-overlay"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><strong>Disponível com o pacote de audiência</strong><small>Valores ilustrativos</small></div>
             </div>
           </div>
 
@@ -142,17 +145,18 @@
   <div class="container">
     <div class="footer-row">
       <a class="logo" href="../index.html" aria-label="Página inicial">
-        <img src="../assets/img/logo.png" srcset="../assets/img/logo.png 1x, ../assets/img/logo@2x.png 2x" alt="Matrix Clipping, ferramentas para clipping" width="460" height="120">
+        <img src="../assets/img/logo.png" srcset="../assets/img/logo.png 1x, ../assets/img/logo@2x.png 2x" alt="Matrix Clipping, ferramenta de clipping" width="460" height="120">
       </a>
       <nav class="footer-links" aria-label="Rodapé">
-        <a href="../index.html#plataforma">Plataforma</a>
-        <a href="../precos/index.html">Preços</a>
+        <a href="../plataforma/index.html">Ferramenta de clipping</a>
+        <a href="../print-em-lote/index.html">Print em lote</a>
+        <a href="../index.html#retorno">Retorno de mídia</a>
         <a href="../entrar/index.html">Entrar</a>
         <a href="../cadastro/index.html">Criar conta</a>
         <a data-email href="#">ferramentamatrix@gmail.com</a>
       </nav>
     </div>
-    <div class="copy">© <span data-year>2026</span> Matrix Clipping · ferramentas para clipping</div>
+    <div class="copy">© <span data-year>2026</span> Matrix Clipping · ferramenta de clipping, print em lote e automação para clipping</div>
   </div>
 </footer>
 <script src="../assets/js/config.js"></script>
