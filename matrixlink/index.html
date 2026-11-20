@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MatrixLink | Entrega Automática por Webhook, SFTP e E-mail | Matrix Clipping</title>
-<meta name="description" content="MatrixLink: entregue os resultados das ferramentas Matrix automaticamente por webhook, SFTP ou e-mail, ao fim de cada lote ou em horário fixo.">
+<title>MatrixLink | Extrator de Informações de Links | Matrix Clipping</title>
+<meta name="description" content="MatrixLink: envie links e receba título, texto, data, autor, veículo e imagem de cada página, na tela, em JSON, pela API ou em planilha.">
 <link rel="canonical" href="https://matrixclipping.com.br/matrixlink/">
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="../assets/img/favicon.ico" sizes="any">
@@ -13,8 +13,8 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="Matrix Clipping">
-<meta property="og:title" content="MatrixLink | Entrega Automática por Webhook, SFTP e E-mail | Matrix Clipping">
-<meta property="og:description" content="MatrixLink: entregue os resultados das ferramentas Matrix automaticamente por webhook, SFTP ou e-mail, ao fim de cada lote ou em horário fixo.">
+<meta property="og:title" content="MatrixLink | Extrator de Informações de Links | Matrix Clipping">
+<meta property="og:description" content="MatrixLink: envie links e receba título, texto, data, autor, veículo e imagem de cada página, na tela, em JSON, pela API ou em planilha.">
 <meta property="og:url" content="https://matrixclipping.com.br/matrixlink/">
 <meta property="og:image" content="https://matrixclipping.com.br/assets/img/icon-512.png">
 <meta name="twitter:card" content="summary">
@@ -22,8 +22,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/main.css">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "MatrixLink", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "MatrixLink: entregue os resultados das ferramentas Matrix automaticamente por webhook, SFTP ou e-mail, ao fim de cada lote ou em horário fixo.", "url": "https://matrixclipping.com.br/matrixlink/", "inLanguage": "pt-BR", "publisher": {"@type": "Organization", "name": "Matrix Clipping"}}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "O que é o MatrixLink?", "acceptedAnswer": {"@type": "Answer", "text": "É a ferramenta de entrega da Matrix Clipping: os resultados do MatrixShot, do MatrixMeter e do MatrixDoc chegam sozinhos ao seu sistema, a uma pasta SFTP ou ao e-mail da equipe."}}, {"@type": "Question", "name": "Quando o envio acontece?", "acceptedAnswer": {"@type": "Answer", "text": "Ao fim de cada lote ou num horário fixo, como todo dia às 7h. Você escolhe por destino."}}, {"@type": "Question", "name": "E se o meu sistema estiver fora do ar?", "acceptedAnswer": {"@type": "Answer", "text": "O MatrixLink tenta de novo automaticamente e registra cada tentativa, para nada se perder."}}, {"@type": "Question", "name": "Como sei que o aviso veio da Matrix?", "acceptedAnswer": {"@type": "Answer", "text": "Cada webhook é assinado com uma chave secreta da sua conta, e o seu sistema confere a assinatura antes de aceitar."}}, {"@type": "Question", "name": "Posso ter mais de um destino?", "acceptedAnswer": {"@type": "Answer", "text": "Sim. O mesmo resultado pode ir para o webhook e para o e-mail da equipe ao mesmo tempo."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "MatrixLink", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "MatrixLink: envie links e receba título, texto, data, autor, veículo e imagem de cada página, na tela, em JSON, pela API ou em planilha.", "url": "https://matrixclipping.com.br/matrixlink/", "inLanguage": "pt-BR", "publisher": {"@type": "Organization", "name": "Matrix Clipping"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "O que é o MatrixLink?", "acceptedAnswer": {"@type": "Answer", "text": "É o extrator de informações da Matrix Clipping: você envia os links e ele lê cada página, separando título, subtítulo, texto, data, autor, veículo, seção e imagem principal."}}, {"@type": "Question", "name": "Como recebo as informações?", "acceptedAnswer": {"@type": "Answer", "text": "Do jeito que preferir: na tela, em JSON, pela MatrixAPI, em planilha (Excel ou CSV) ou com aviso por webhook quando o lote termina."}}, {"@type": "Question", "name": "Posso enviar muitos links de uma vez?", "acceptedAnswer": {"@type": "Answer", "text": "Sim. Envie uma lista, uma planilha ou pela MatrixAPI. Os links são processados em paralelo, como no MatrixShot."}}, {"@type": "Question", "name": "Posso escolher só alguns campos?", "acceptedAnswer": {"@type": "Answer", "text": "Sim. Você define quais informações quer receber e salva esse modelo para os próximos envios."}}, {"@type": "Question", "name": "Funciona com qualquer site?", "acceptedAnswer": {"@type": "Answer", "text": "Funciona com a grande maioria dos portais e sites de notícia. Páginas que exigem login ou bloqueiam acesso automático podem ter limitações, e o link fica sinalizado no resultado."}}, {"@type": "Question", "name": "Dá para usar junto com o MatrixShot?", "acceptedAnswer": {"@type": "Answer", "text": "Sim. No mesmo envio você recebe as informações da página pelo MatrixLink e o print pelo MatrixShot."}}]}</script>
 </head>
 <body>
 <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
@@ -32,13 +32,12 @@
     <a class="logo" href="../index.html" aria-label="Página inicial">
       <img src="../assets/img/logo.png" srcset="../assets/img/logo.png 1x, ../assets/img/logo@2x.png 2x" alt="Matrix Clipping" width="460" height="120">
     </a>
-    <nav class="nav" aria-label="Principal">
-      <div class="nav-drop"><a href="../plataforma/index.html" class="on" aria-haspopup="true">Ferramentas <span aria-hidden="true">▾</span></a>
-        <div class="drop"><a href="../matrixshot/index.html"><b>MatrixShot</b><small>Print e screenshot em lote</small></a><a href="../matrixmeter/index.html"><b>MatrixMeter</b><small>Altura, largura e centimetragem</small></a><a href="../matrixdoc/index.html"><b>MatrixDoc</b><small>PDF e Excel para dados e relatórios</small></a><a href="../matrixapi/index.html"><b>MatrixAPI</b><small>As ferramentas no seu sistema</small></a><a href="../matrixlink/index.html" aria-current="page"><b>MatrixLink</b><small>Entrega por webhook, SFTP e e-mail</small></a><a class="drop-all" href="../plataforma/index.html">Ver todas as ferramentas →</a></div></div>
-      <a href="../matrixshot/index.html">MatrixShot</a>
-      <a href="../matrixdoc/index.html">MatrixDoc</a>
-      <a href="../matrixapi/index.html">MatrixAPI</a>
-      <a href="../index.html#perguntas">Perguntas</a>
+    <nav class="nav" aria-label="Ferramentas">
+      <a href="../matrixshot/index.html" title="Print e screenshot em lote">MatrixShot</a>
+      <a href="../matrixlink/index.html" aria-current="page" title="Extrator de informações de links">MatrixLink</a>
+      <a href="../matrixmeter/index.html" title="Altura, largura e centimetragem">MatrixMeter</a>
+      <a href="../matrixdoc/index.html" title="PDF e Excel para dados e relatórios">MatrixDoc</a>
+      <a href="../matrixapi/index.html" title="As ferramentas no seu sistema">MatrixAPI</a>
     </nav>
     <div class="header-actions">
       <a class="btn btn-glass" href="../entrar/index.html">Entrar</a>
@@ -50,8 +49,7 @@
   </div>
   <nav class="mobile-nav" id="mobileNav" aria-label="Menu móvel" hidden>
     <span class="mn-lbl">Ferramentas</span>
-    <a href="../matrixshot/index.html">MatrixShot</a><a href="../matrixmeter/index.html">MatrixMeter</a><a href="../matrixdoc/index.html">MatrixDoc</a><a href="../matrixapi/index.html">MatrixAPI</a><a href="../matrixlink/index.html">MatrixLink</a>
-    <a href="../plataforma/index.html">Todas as ferramentas</a>
+    <a href="../matrixshot/index.html">MatrixShot</a><a href="../matrixlink/index.html">MatrixLink</a><a href="../matrixmeter/index.html">MatrixMeter</a><a href="../matrixdoc/index.html">MatrixDoc</a><a href="../matrixapi/index.html">MatrixAPI</a>
     <a href="../index.html#perguntas">Perguntas</a>
   </nav>
 </header>
@@ -63,36 +61,52 @@
     <div>
       <span class="tag">matrix clipping · ferramenta</span>
       <h1 class="tool-h1">MatrixLink</h1>
-      <p class="lead">Terminou o lote? O resultado chega sozinho onde a sua equipe já trabalha, sem ninguém precisar baixar e reenviar arquivo.</p>
+      <p class="lead">Extrator de informações. Envie os links e o MatrixLink devolve título, texto, data, autor, veículo e imagem de cada página, do jeito que você quiser: na tela, em JSON, pela API ou em planilha.</p>
       <div class="cta-row" style="margin-top:26px"><a class="btn btn-primary" href="../cadastro/index.html">Criar conta</a><a class="btn btn-glass" href="mailto:ferramentamatrix@gmail.com?subject=MatrixLink">Falar com a gente</a></div>
     </div>
-    <div><div class="mock" aria-hidden="true"><div class="mock-bar"><i></i><i></i><i></i></div><div class="mock-card mock-row"><b>Lote finalizado · 1.000 prints</b><span class="mock-tag ok">entregue</span></div><div class="mock-card mock-row"><span>MatrixLink · webhook do seu sistema</span><span class="mock-tag ok">200 OK</span></div><div class="mock-card mock-row"><span>MatrixLink · SFTP · pasta diária</span><span class="mock-tag ok">enviado</span></div><div class="mock-card mock-row"><span>MatrixLink · e-mail da equipe</span><span class="mock-tag mute">às 7h</span></div></div></div>
+    <div><div class="linkw" data-linkx>
+        <div class="lk-in">
+          <p class="doc-lbl">Links enviados</p>
+          <button type="button" data-i="0" class="on"><span class="lk-ok">✓</span><span>portalexemplo.com.br/economia/nova-fabrica</span></button>
+          <button type="button" data-i="1"><span class="lk-ok">✓</span><span>gazetamodelo.com.br/negocios/energia-cresce</span></button>
+          <button type="button" data-i="2"><span class="lk-ok">✓</span><span>radiomodelo.com.br/noticias/plano-municipal</span></button>
+          <small class="lk-note">3 de 3 extraídos</small>
+        </div>
+        <div class="doc-outw">
+          <div class="seg" role="tablist" aria-label="Formato de saída"><button type="button" data-fmt="vis" class="on">Visual</button><button type="button" data-fmt="json">JSON</button><button type="button" data-fmt="api">API</button><button type="button" data-fmt="csv">Planilha</button></div>
+          <div class="doc-out" data-out aria-live="polite"></div>
+        </div>
+      </div></div>
   </div>
 </section>
-<section class="section section-alt"><div class="container"><div class="section-head reveal"><div><span class="tag">destinos</span><h2>Você escolhe para onde vai.</h2></div></div><div class="ctrl"><div class="card reveal" style="transition-delay:0.00s"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg></div><strong>Webhook</strong><span>O seu sistema recebe um aviso com os dados do resultado assim que ele fica pronto.</span></div><div class="card reveal" style="transition-delay:0.05s"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 10h10M4 14h16M4 18h8"/></svg></div><strong>SFTP</strong><span>Arquivos entregues numa pasta organizada por data e por lote.</span></div><div class="card reveal" style="transition-delay:0.10s"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h3l5 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M16 8a5 5 0 0 1 0 8"/></svg></div><strong>E-mail</strong><span>A equipe recebe o resultado ou o link para baixar, no horário que você definir.</span></div></div></div></section><section class="section"><div class="container split rev"><div class="reveal" style="transition-delay:.1s"><pre class="code-card"><span class="c"># MatrixLink · webhook enviado ao fim do lote</span>
-POST https://seu-sistema.com.br/matrix
+<section class="section section-alt"><div class="container"><div class="section-head reveal"><div><span class="tag">como funciona</span><h2>Do link à informação pronta em três passos.</h2></div></div><div class="flow"><div class="flow-step reveal" style="transition-delay:0.00s"><span class="n">1</span><h3>Envie os links</h3><p>Um link, uma lista, uma planilha ou direto do seu sistema pela MatrixAPI.</p></div><div class="flow-step reveal" style="transition-delay:0.08s"><span class="n">2</span><h3>O MatrixLink extrai</h3><p>Cada página é lida e as informações são separadas: título, subtítulo, texto, data, autor, veículo, seção e imagem.</p></div><div class="flow-step reveal" style="transition-delay:0.16s"><span class="n">3</span><h3>Receba do seu jeito</h3><p>Na tela, em JSON, pela API, em Excel ou CSV, com aviso por webhook quando o lote termina.</p></div></div></div></section><section class="section"><div class="container split"><div class="reveal"><span class="tag">o que é extraído</span><h2>Cada página, organizada em campos.</h2><p class="lead">Nada de copiar e colar texto de site: as informações chegam separadas e prontas para usar.</p><ul class="ticks2"><li>Título e subtítulo</li><li>Texto completo da página</li><li>Data e hora de publicação</li><li>Autor e seção</li><li>Veículo e endereço</li><li>Imagem principal</li></ul></div><div class="reveal" style="transition-delay:.1s"><div class="mock" aria-hidden="true"><div class="mock-bar"><i></i><i></i><i></i></div><div class="mock-card"><small>título</small><div><b>Empresa X anuncia nova fábrica no interior</b></div></div><div class="mock-grid" style="grid-template-columns:1fr 1fr"><div class="mock-card"><small>data</small><div>18/11/2026 09:42</div></div><div class="mock-card"><small>autor</small><div>Redação</div></div><div class="mock-card"><small>veículo</small><div>Portal Exemplo</div></div><div class="mock-card"><small>seção</small><div>Economia</div></div></div><div class="mock-card"><small>texto</small><div style="color:#5b6170">A empresa confirmou nesta segunda-feira a construção de uma nova unidade…</div></div></div></div></div></section><section class="section"><div class="container split rev"><div class="reveal" style="transition-delay:.1s"><pre class="code-card"><span class="c"># MatrixLink · extrair as informações de um link</span>
+curl -X POST https://api.matrixclipping.com.br/v1/matrixlink \
+  -H <span class="s">"Authorization: Bearer mc_live_…"</span> \
+  -d <span class="s">'{"url":"https://portal.demo/noticia"}'</span>
+
+<span class="c"># resposta</span>
 {
-  <span class="k">"evento"</span>: <span class="s">"lote.concluido"</span>,
-  <span class="k">"ferramenta"</span>: <span class="s">"MatrixShot"</span>,
-  <span class="k">"lote"</span>: <span class="s">"L-20261120-01"</span>,
-  <span class="k">"total"</span>: 1000,
-  <span class="k">"sucesso"</span>: 998,
-  <span class="k">"arquivos"</span>: <span class="s">"https://…/L-20261120-01.zip"</span>
-}</pre></div><div class="reveal"><span class="tag">webhook</span><h2>Avisos que o seu sistema entende.</h2><p class="lead">Cada entrega vem com os dados do lote, o resultado e o link dos arquivos, num formato simples de integrar.</p><ul class="ticks2"><li>Envio ao fim do lote ou em horário fixo</li><li>Nova tentativa automática</li><li>Assinatura de segurança em cada aviso</li><li>Mais de um destino por resultado</li></ul></div></div></section>
+  <span class="k">"titulo"</span>: <span class="s">"Empresa X anuncia nova fábrica"</span>,
+  <span class="k">"data"</span>: <span class="s">"2026-11-18T09:42"</span>,
+  <span class="k">"autor"</span>: <span class="s">"Redação"</span>,
+  <span class="k">"veiculo"</span>: <span class="s">"Portal Exemplo"</span>,
+  <span class="k">"texto"</span>: <span class="s">"A empresa confirmou…"</span>
+}</pre></div><div class="reveal"><span class="tag">formatos</span><h2>Você escolhe como recebe.</h2><p class="lead">A mesma extração serve para a equipe olhar na tela e para o seu sistema receber automaticamente.</p><ul class="ticks2"><li>Visual, direto no painel</li><li>JSON pronto para integrar</li><li>MatrixAPI, link a link ou em lote</li><li>Planilha em Excel ou CSV</li><li>Aviso por webhook ao fim do lote</li><li>Modelos de campos salvos</li></ul></div></div></section>
 <section class="section section-alt" id="perguntas"><div class="container reveal"><div class="section-head"><div><span class="tag">perguntas</span><h2>Sobre o MatrixLink.</h2></div></div><div class="faq">
-      <details><summary>O que é o MatrixLink?</summary><p>É a ferramenta de entrega da Matrix Clipping: os resultados do MatrixShot, do MatrixMeter e do MatrixDoc chegam sozinhos ao seu sistema, a uma pasta SFTP ou ao e-mail da equipe.</p></details>
-      <details><summary>Quando o envio acontece?</summary><p>Ao fim de cada lote ou num horário fixo, como todo dia às 7h. Você escolhe por destino.</p></details>
-      <details><summary>E se o meu sistema estiver fora do ar?</summary><p>O MatrixLink tenta de novo automaticamente e registra cada tentativa, para nada se perder.</p></details>
-      <details><summary>Como sei que o aviso veio da Matrix?</summary><p>Cada webhook é assinado com uma chave secreta da sua conta, e o seu sistema confere a assinatura antes de aceitar.</p></details>
-      <details><summary>Posso ter mais de um destino?</summary><p>Sim. O mesmo resultado pode ir para o webhook e para o e-mail da equipe ao mesmo tempo.</p></details>
+      <details><summary>O que é o MatrixLink?</summary><p>É o extrator de informações da Matrix Clipping: você envia os links e ele lê cada página, separando título, subtítulo, texto, data, autor, veículo, seção e imagem principal.</p></details>
+      <details><summary>Como recebo as informações?</summary><p>Do jeito que preferir: na tela, em JSON, pela MatrixAPI, em planilha (Excel ou CSV) ou com aviso por webhook quando o lote termina.</p></details>
+      <details><summary>Posso enviar muitos links de uma vez?</summary><p>Sim. Envie uma lista, uma planilha ou pela MatrixAPI. Os links são processados em paralelo, como no MatrixShot.</p></details>
+      <details><summary>Posso escolher só alguns campos?</summary><p>Sim. Você define quais informações quer receber e salva esse modelo para os próximos envios.</p></details>
+      <details><summary>Funciona com qualquer site?</summary><p>Funciona com a grande maioria dos portais e sites de notícia. Páginas que exigem login ou bloqueiam acesso automático podem ter limitações, e o link fica sinalizado no resultado.</p></details>
+      <details><summary>Dá para usar junto com o MatrixShot?</summary><p>Sim. No mesmo envio você recebe as informações da página pelo MatrixLink e o print pelo MatrixShot.</p></details>
     </div></div></section>
-<section class="section"><div class="container"><div class="section-head reveal"><div><span class="tag">outras ferramentas</span><h2>Funciona ainda melhor junto.</h2></div></div><div class="prods"><a class="prod reveal" href="../matrixshot/index.html" style="transition-delay:0.00s"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V4h4M16 4h4v4M20 16v4h-4M8 20H4v-4"/><rect x="8" y="8" width="8" height="8" rx="1"/></svg></div><h3>MatrixShot</h3><p>Print e screenshot em lote. Milhares de páginas capturadas ao mesmo tempo.</p><span class="prod-go">Conhecer &rarr;</span></a><a class="prod reveal" href="../matrixmeter/index.html" style="transition-delay:0.06s"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17 17 3l4 4L7 21z"/><path d="m7 13 2 2M10 10l2 2M13 7l2 2"/></svg></div><h3>MatrixMeter</h3><p>Altura, largura e centimetragem de qualquer área da página, em segundos.</p><span class="prod-go">Conhecer &rarr;</span></a><a class="prod reveal" href="../matrixdoc/index.html" style="transition-delay:0.12s"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 10h10M4 14h16M4 18h8"/></svg></div><h3>MatrixDoc</h3><p>Envie um PDF ou Excel e receba JSON, INSERT para o seu banco, envio por API ou um relatório sob medida.</p><span class="prod-go">Conhecer &rarr;</span></a><a class="prod reveal" href="../matrixapi/index.html" style="transition-delay:0.18s"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M15 8l2 2"/></svg></div><h3>MatrixAPI</h3><p>Todas as ferramentas da Matrix dentro do seu sistema, com token e respostas em JSON.</p><span class="prod-go">Conhecer &rarr;</span></a></div></div></section>
+<section class="section"><div class="container"><div class="section-head reveal"><div><span class="tag">outras ferramentas</span><h2>Funciona ainda melhor junto.</h2></div></div><div class="prods"><a class="prod reveal" href="../matrixshot/index.html" style="transition-delay:0.00s"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V4h4M16 4h4v4M20 16v4h-4M8 20H4v-4"/><rect x="8" y="8" width="8" height="8" rx="1"/></svg></div><h3>MatrixShot</h3><p>Print e screenshot em lote. Milhares de páginas capturadas ao mesmo tempo.</p><span class="prod-go">Conhecer &rarr;</span></a><a class="prod reveal" href="../matrixmeter/index.html" style="transition-delay:0.06s"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17 17 3l4 4L7 21z"/><path d="m7 13 2 2M10 10l2 2M13 7l2 2"/></svg></div><h3>MatrixMeter</h3><p>Altura, largura e centimetragem de qualquer área da página, em segundos.</p><span class="prod-go">Conhecer &rarr;</span></a><a class="prod reveal" href="../matrixdoc/index.html" style="transition-delay:0.12s"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 10h10M4 14h16M4 18h8"/></svg></div><h3>MatrixDoc</h3><p>Envie um PDF ou Excel e receba JSON, INSERT para o seu banco, envio por API ou um relatório sob medida.</p><span class="prod-go">Conhecer &rarr;</span></a><a class="prod reveal" href="../matrixapi/index.html" style="transition-delay:0.18s"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M15 8l2 2"/></svg></div><h3>MatrixAPI</h3><p>Todas as ferramentas da Matrix dentro do seu sistema, com token, respostas em JSON e aviso por webhook.</p><span class="prod-go">Conhecer &rarr;</span></a></div></div></section>
 <section class="section" style="padding-top:20px">
   <div class="container reveal">
     <div class="final">
       <span class="tag" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#ffb48a">matrix clipping</span>
       <h2 style="margin-top:16px">A ferramenta certa muda o ritmo da operação.</h2>
-      <p>MatrixShot, MatrixMeter, MatrixDoc, MatrixAPI e MatrixLink: menos trabalho manual, mais entrega para a sua equipe.</p>
+      <p>MatrixShot, MatrixLink, MatrixMeter, MatrixDoc e MatrixAPI: menos trabalho manual, mais entrega para a sua equipe.</p>
       <div class="cta-row"><a class="btn btn-primary" href="../cadastro/index.html">Criar conta</a><a class="btn btn-glass" href="mailto:ferramentamatrix@gmail.com?subject=Quero%20conhecer%20a%20Matrix%20Clipping">Falar com a gente</a></div>
     </div>
   </div>

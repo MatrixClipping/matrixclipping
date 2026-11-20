@@ -418,11 +418,49 @@
     });
   }
 
+
+  // ---------------------------------------------------------
+  // MATRIXLINK: link escolhido → visual, JSON, API ou planilha
+  // ---------------------------------------------------------
+  var LK = [
+    { url: 'https://portalexemplo.com.br/economia/nova-fabrica', titulo: 'Empresa X anuncia nova fábrica no interior', subtitulo: 'Investimento prevê 300 empregos diretos', data: '2026-11-18T09:42', autor: 'Redação', veiculo: 'Portal Exemplo', secao: 'Economia', imagem: 'https://portalexemplo.com.br/img/fabrica.jpg', texto: 'A empresa confirmou nesta segunda-feira a construção de uma nova unidade, com início das obras previsto para o próximo semestre.' },
+    { url: 'https://gazetamodelo.com.br/negocios/energia-cresce', titulo: 'Setor de energia cresce 12% no trimestre', subtitulo: 'Resultado supera expectativa do mercado', data: '2026-11-17T18:05', autor: 'Ana Souza', veiculo: 'Gazeta Modelo', secao: 'Negócios', imagem: 'https://gazetamodelo.com.br/img/energia.jpg', texto: 'O levantamento mostra alta puxada por fontes renováveis e por novos contratos com a indústria.' },
+    { url: 'https://radiomodelo.com.br/noticias/plano-municipal', titulo: 'Prefeitura apresenta plano de mobilidade', subtitulo: 'Consulta pública fica aberta por 30 dias', data: '2026-11-17T07:30', autor: 'Carlos Lima', veiculo: 'Rádio Modelo', secao: 'Cidades', imagem: 'https://radiomodelo.com.br/img/mobilidade.jpg', texto: 'O plano prevê novas linhas de ônibus, ciclovias e integração entre os modais da região metropolitana.' }
+  ];
+  var LK_ROT = [['titulo', 'Título'], ['subtitulo', 'Subtítulo'], ['data', 'Publicação'], ['autor', 'Autor'], ['veiculo', 'Veículo'], ['secao', 'Seção'], ['texto', 'Texto'], ['imagem', 'Imagem']];
+  function lkData(v) { var p = v.split('T'), d = p[0].split('-'); return d[2] + '/' + d[1] + '/' + d[0] + (p[1] ? ' ' + p[1] : ''); }
+  function wireLink() {
+    $$('[data-linkx]').forEach(function (box) {
+      var i = 0, fmt = 'vis', outEl = $('[data-out]', box);
+      function obj(it) { var o = {}; LK_ROT.forEach(function (r) { o[r[0]] = it[r[0]]; }); o.url = it.url; return o; }
+      function pretty(o, ind) { return '{\n' + Object.keys(o).map(function (k) { return ind + '  <span class="k">"' + k + '"</span>: <span class="s">"' + esc(o[k]) + '"</span>'; }).join(',\n') + '\n' + ind + '}'; }
+      function render() {
+        var it = LK[i], h;
+        if (fmt === 'vis') h = '<dl class="data lk-vis" style="transform:none">' + LK_ROT.map(function (r) {
+            var v = r[0] === 'data' ? lkData(it.data) : it[r[0]];
+            return '<div class="row filled"><dt>' + r[1] + '</dt><dd>' + (r[0] === 'titulo' ? '<b>' + esc(v) + '</b>' : esc(v)) + '</dd></div>';
+          }).join('') + '</dl>';
+        else if (fmt === 'json') h = '<pre><span class="c">// MatrixLink · saída em JSON</span>\n' + pretty(obj(it), '') + '</pre>';
+        else if (fmt === 'api') h = '<pre><span class="c"># MatrixLink pela MatrixAPI</span>\n<span class="k">POST</span> /v1/matrixlink\n{ <span class="k">"url"</span>: <span class="s">"' + esc(it.url) + '"</span> }\n\n<span class="c"># resposta</span>\n' + pretty(obj(it), '') + '</pre>';
+        else h = '<div class="doc-rel"><div class="doc-rel-h"><b>Links extraídos</b><span style="font:11px var(--mono);color:var(--muted)">Excel · CSV</span></div><table><thead><tr><th>Título</th><th>Veículo</th><th>Publicação</th><th>Autor</th></tr></thead><tbody>' +
+          LK.map(function (x, k) { return '<tr' + (k === i ? ' style="background:#fff4ec"' : '') + '><td>' + esc(x.titulo) + '</td><td>' + esc(x.veiculo) + '</td><td>' + esc(lkData(x.data)) + '</td><td>' + esc(x.autor) + '</td></tr>'; }).join('') + '</tbody></table></div>';
+        outEl.innerHTML = h;
+      }
+      $$('[data-i]', box).forEach(function (b) {
+        b.addEventListener('click', function () { i = +b.getAttribute('data-i'); $$('[data-i]', box).forEach(function (x) { x.classList.toggle('on', x === b); }); render(); });
+      });
+      $$('[data-fmt]', box).forEach(function (b) {
+        b.addEventListener('click', function () { fmt = b.getAttribute('data-fmt'); $$('[data-fmt]', box).forEach(function (x) { x.classList.toggle('on', x === b); }); render(); track('matrixlink_formato', { formato: fmt }); });
+      });
+      render();
+    });
+  }
+
   window.MC = { esc: esc, brl2: brl2, num: num, track: track, sleep: sleep, REDUCED: REDUCED };
 
   document.addEventListener('DOMContentLoaded', function () {
     wireLinks(); wireMenu(); wireHeader(); wireReveal();
     wireCanvas(); wireTilt(); wireAutoDemo(); wireProbe();
-    wireTabs(); wireBatch(); wireCadastro(); wireMeter(); wireDoc();
+    wireTabs(); wireBatch(); wireCadastro(); wireMeter(); wireDoc(); wireLink();
   });
 })();
