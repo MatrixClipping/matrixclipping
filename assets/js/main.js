@@ -342,11 +342,87 @@
     }
   }
 
+
+  // ---------------------------------------------------------
+  // MATRIXMETER: arraste para medir (96 dpi → 1 cm = 37,8 px)
+  // ---------------------------------------------------------
+  function wireMeter() {
+    $$('[data-meter]').forEach(function (box) {
+      var area = $('[data-area]', box), sel = $('[data-sel]', box), tag = $('[data-tag]', box);
+      var PX = 37.8, VIEW = 1366, d2 = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+      var st = { x: .12, y: .2, w: .6, h: .55 };          // fração da área visível
+      function out(k, v) { var e = $('[data-o="' + k + '"]', box); if (e) e.textContent = v; }
+      function draw() {
+        var W = area.clientWidth, H = area.clientHeight, k = VIEW / W;
+        Object.assign(sel.style, { left: st.x * W + 'px', top: st.y * H + 'px', width: st.w * W + 'px', height: st.h * H + 'px' });
+        var wpx = Math.round(st.w * W * k), hpx = Math.round(st.h * H * k);
+        var wcm = wpx / PX, hcm = hpx / PX;
+        out('lcm', d2.format(wcm) + ' cm'); out('lpx', num.format(wpx) + ' px');
+        out('acm', d2.format(hcm) + ' cm'); out('apx', num.format(hpx) + ' px');
+        out('cm2', d2.format(wcm * hcm));
+        tag.textContent = num.format(wpx) + ' × ' + num.format(hpx) + ' px';
+      }
+      var ini = null;
+      function pos(e) { var r = area.getBoundingClientRect(); return [Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)), Math.max(0, Math.min(1, (e.clientY - r.top) / r.height))]; }
+      area.addEventListener('pointerdown', function (e) { ini = pos(e); area.setPointerCapture(e.pointerId); });
+      area.addEventListener('pointermove', function (e) {
+        if (!ini) return; var p = pos(e);
+        st = { x: Math.min(p[0], ini[0]), y: Math.min(p[1], ini[1]), w: Math.max(.02, Math.abs(p[0] - ini[0])), h: Math.max(.02, Math.abs(p[1] - ini[1])) };
+        draw();
+      });
+      area.addEventListener('pointerup', function () { if (ini) track('matrixmeter_medida'); ini = null; });
+      window.addEventListener('resize', draw);
+      draw();
+    });
+  }
+
+  // ---------------------------------------------------------
+  // MATRIXDOC: campos marcados → JSON, INSERT, API ou relatório
+  // ---------------------------------------------------------
+  var DOC_ITENS = [
+    { titulo: 'Empresa X anuncia nova fábrica no interior', subtitulo: 'Investimento prevê 300 empregos diretos', corpo: 'A empresa confirmou nesta segunda-feira a construção de uma nova unidade, com início das obras previsto para o próximo semestre.', data: '2026-11-18', veiculo: 'Portal Exemplo', autor: 'Redação' },
+    { titulo: 'Setor de energia cresce 12% no trimestre', subtitulo: 'Resultado supera expectativa do mercado', corpo: 'O levantamento mostra alta puxada por fontes renováveis e por novos contratos com a indústria.', data: '2026-11-17', veiculo: 'Gazeta Modelo', autor: 'Ana Souza' }
+  ];
+  var DOC_ROT = { titulo: 'Título', subtitulo: 'Subtítulo', corpo: 'Texto', data: 'Data', veiculo: 'Veículo', autor: 'Autor' };
+  function wireDoc() {
+    $$('[data-doc]').forEach(function (box) {
+      var fmt = 'json', outEl = $('[data-out]', box);
+      function campos() { return $$('[data-f]', box).filter(function (c) { return c.checked; }).map(function (c) { return c.getAttribute('data-f'); }); }
+      function jsonTxt(fs, ind) {
+        return '[\n' + DOC_ITENS.map(function (it) {
+          return ind + '{\n' + fs.map(function (f) { return ind + '  <span class="k">"' + f + '"</span>: <span class="s">"' + esc(it[f]) + '"</span>'; }).join(',\n') + '\n' + ind + '}';
+        }).join(',\n') + '\n]';
+      }
+      function render() {
+        var fs = campos();
+        if (!fs.length) { outEl.innerHTML = '<pre><span class="c">Marque pelo menos um campo.</span></pre>'; return; }
+        var h;
+        if (fs.length && fmt === 'json') h = '<pre><span class="c">// MatrixDoc · saída em JSON</span>\n' + jsonTxt(fs, '  ') + '</pre>';
+        else if (fmt === 'sql') h = '<pre><span class="c">-- MatrixDoc · INSERT para o seu banco</span>\n<span class="k">INSERT INTO</span> materias (' + fs.join(', ') + ')\n<span class="k">VALUES</span>\n' +
+          DOC_ITENS.map(function (it) { return '  (' + fs.map(function (f) { return '<span class="s">\'' + esc(String(it[f]).replace(/'/g, "''")) + '\'</span>'; }).join(', ') + ')'; }).join(',\n') + ';</pre>';
+        else if (fmt === 'api') h = '<pre><span class="c"># MatrixDoc → MatrixLink · envio para o seu sistema</span>\n<span class="k">POST</span> https://seu-sistema.com.br/materias\nContent-Type: application/json\n\n' + jsonTxt(fs, '') + '</pre>';
+        else h = '<div class="doc-rel"><div class="doc-rel-h"><b>Relatório · semana 47</b><span class="mono" style="font:11px var(--mono);color:var(--muted)">PDF · Excel</span></div><table><thead><tr>' +
+          fs.map(function (f) { return '<th>' + DOC_ROT[f] + '</th>'; }).join('') + '</tr></thead><tbody>' +
+          DOC_ITENS.map(function (it) { return '<tr>' + fs.map(function (f) { return '<td>' + esc(f === 'data' ? it[f].split('-').reverse().join('/') : it[f]) + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div>';
+        outEl.innerHTML = h;
+      }
+      $$('[data-f]', box).forEach(function (c) { c.addEventListener('change', render); });
+      $$('[data-fmt]', box).forEach(function (b) {
+        b.addEventListener('click', function () {
+          fmt = b.getAttribute('data-fmt');
+          $$('[data-fmt]', box).forEach(function (x) { x.classList.toggle('on', x === b); });
+          render(); track('matrixdoc_formato', { formato: fmt });
+        });
+      });
+      render();
+    });
+  }
+
   window.MC = { esc: esc, brl2: brl2, num: num, track: track, sleep: sleep, REDUCED: REDUCED };
 
   document.addEventListener('DOMContentLoaded', function () {
     wireLinks(); wireMenu(); wireHeader(); wireReveal();
     wireCanvas(); wireTilt(); wireAutoDemo(); wireProbe();
-    wireTabs(); wireBatch(); wireCadastro();
+    wireTabs(); wireBatch(); wireCadastro(); wireMeter(); wireDoc();
   });
 })();

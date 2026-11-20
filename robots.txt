@@ -3,6 +3,5 @@ Allow: /
 Disallow: /entrar/
 Disallow: /cadastro/
 Disallow: /processar/
-Disallow: /precos/
 
 Sitemap: https://matrixclipping.com.br/sitemap.xml

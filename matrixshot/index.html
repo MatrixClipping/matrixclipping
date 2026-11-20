@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MatrixShot | Print em Lote e Screenshot | Matrix Clipping</title>
+<meta name="description" content="MatrixShot: print e screenshot em lote. Páginas inteiras em desktop e celular, milhares de links processados em paralelo, com entrega por API e webhook.">
+<link rel="canonical" href="https://matrixclipping.com.br/matrixshot/">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="../assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="../assets/img/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Matrix Clipping">
+<meta property="og:title" content="MatrixShot | Print em Lote e Screenshot | Matrix Clipping">
+<meta property="og:description" content="MatrixShot: print e screenshot em lote. Páginas inteiras em desktop e celular, milhares de links processados em paralelo, com entrega por API e webhook.">
+<meta property="og:url" content="https://matrixclipping.com.br/matrixshot/">
+<meta property="og:image" content="https://matrixclipping.com.br/assets/img/icon-512.png">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/main.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "MatrixShot", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "MatrixShot: print e screenshot em lote. Páginas inteiras em desktop e celular, milhares de links processados em paralelo, com entrega por API e webhook.", "url": "https://matrixclipping.com.br/matrixshot/", "inLanguage": "pt-BR", "publisher": {"@type": "Organization", "name": "Matrix Clipping"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "O que é o MatrixShot?", "acceptedAnswer": {"@type": "Answer", "text": "É a ferramenta de print e screenshot em lote da Matrix Clipping: você envia vários links de uma vez e recebe a captura de cada página, sem abrir uma por uma."}}, {"@type": "Question", "name": "Como envio os links?", "acceptedAnswer": {"@type": "Answer", "text": "Cole a lista, envie uma planilha ou mande pela MatrixAPI a partir do seu sistema."}}, {"@type": "Question", "name": "O screenshot sai da página inteira?", "acceptedAnswer": {"@type": "Answer", "text": "Sim. Você escolhe página inteira ou área visível, versão desktop ou celular. As medidas da captura saem pelo MatrixMeter."}}, {"@type": "Question", "name": "E se uma página estiver fora do ar?", "acceptedAnswer": {"@type": "Answer", "text": "O MatrixShot tenta de novo sozinho. Se ainda assim não der certo, o link fica marcado no lote e não trava o resto."}}, {"@type": "Question", "name": "Lotes diferentes disputam a fila?", "acceptedAnswer": {"@type": "Answer", "text": "Não. Os lotes são processados com revezamento, e cada conta tem a sua capacidade de prints simultâneos. O lote menor não espera o maior."}}, {"@type": "Question", "name": "Em que formato recebo os prints?", "acceptedAnswer": {"@type": "Answer", "text": "Imagem e PDF, e também pela MatrixAPI e pelo MatrixLink (webhook, SFTP ou e-mail)."}}]}</script>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="../index.html" aria-label="Página inicial">
+      <img src="../assets/img/logo.png" srcset="../assets/img/logo.png 1x, ../assets/img/logo@2x.png 2x" alt="Matrix Clipping" width="460" height="120">
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <div class="nav-drop"><a href="../plataforma/index.html" class="on" aria-haspopup="true">Ferramentas <span aria-hidden="true">▾</span></a>
+        <div class="drop"><a href="../matrixshot/index.html" aria-current="page"><b>MatrixShot</b><small>Print e screenshot em lote</small></a><a href="../matrixmeter/index.html"><b>MatrixMeter</b><small>Altura, largura e centimetragem</small></a><a href="../matrixdoc/index.html"><b>MatrixDoc</b><small>PDF e Excel para dados e relatórios</small></a><a href="../matrixapi/index.html"><b>MatrixAPI</b><small>As ferramentas no seu sistema</small></a><a href="../matrixlink/index.html"><b>MatrixLink</b><small>Entrega por webhook, SFTP e e-mail</small></a><a class="drop-all" href="../plataforma/index.html">Ver todas as ferramentas →</a></div></div>
+      <a href="../matrixshot/index.html" aria-current="page">MatrixShot</a>
+      <a href="../matrixdoc/index.html">MatrixDoc</a>
+      <a href="../matrixapi/index.html">MatrixAPI</a>
+      <a href="../index.html#perguntas">Perguntas</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-glass" href="../entrar/index.html">Entrar</a>
+      <a class="btn btn-primary" href="../cadastro/index.html">Criar conta</a>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileNav">
+        <svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobileNav" aria-label="Menu móvel" hidden>
+    <span class="mn-lbl">Ferramentas</span>
+    <a href="../matrixshot/index.html">MatrixShot</a><a href="../matrixmeter/index.html">MatrixMeter</a><a href="../matrixdoc/index.html">MatrixDoc</a><a href="../matrixapi/index.html">MatrixAPI</a><a href="../matrixlink/index.html">MatrixLink</a>
+    <a href="../plataforma/index.html">Todas as ferramentas</a>
+    <a href="../index.html#perguntas">Perguntas</a>
+  </nav>
+</header>
+
+<main id="conteudo">
+<section class="page-hero">
+  <div class="glow glow-a" aria-hidden="true"></div>
+  <div class="container split">
+    <div>
+      <span class="tag">matrix clipping · ferramenta</span>
+      <h1 class="tool-h1">MatrixShot</h1>
+      <p class="lead">Print e screenshot em lote. Mande a lista de links e receba a captura de cada página. Sem abrir página por página, sem fila travada.</p>
+      <div class="cta-row" style="margin-top:26px"><a class="btn btn-primary" href="../cadastro/index.html">Criar conta</a><a class="btn btn-glass" href="mailto:ferramentamatrix@gmail.com?subject=MatrixShot">Falar com a gente</a></div>
+    </div>
+    <div><div class="batch" data-batch aria-label="Simulação do MatrixShot processando três lotes de print em paralelo">
+        <div class="batch-head"><b>MatrixShot</b><span class="batch-clock">0 prints</span></div>
+        <div class="lane" data-total="1000" data-c="1"><div><b>Lote A</b> <small>· 1.000 links</small></div><span class="lane-n"></span><div class="lane-bar"><i></i></div><span class="lane-st">na fila</span></div>
+        <div class="lane" data-total="500" data-c="2"><div><b>Lote B</b> <small>· 500 links</small></div><span class="lane-n"></span><div class="lane-bar"><i></i></div><span class="lane-st">na fila</span></div>
+        <div class="lane" data-total="5000" data-c="3"><div><b>Lote C</b> <small>· 5.000 links</small></div><span class="lane-n"></span><div class="lane-bar"><i></i></div><span class="lane-st">na fila</span></div>
+        <div class="tiles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <p class="batch-note">Simulação ilustrativa: os três lotes andam ao mesmo tempo, e o menor não espera o maior.</p>
+      </div></div>
+  </div>
+</section>
+<section class="section section-alt"><div class="container"><div class="section-head reveal"><div><span class="tag">como funciona</span><h2>O lote inteiro, sem esforço manual.</h2></div></div><div class="flow"><div class="flow-step reveal" style="transition-delay:0.00s"><span class="n">1</span><h3>Envie a lista</h3><p>Cole os links, envie uma planilha ou integre pela MatrixAPI. Um lote pode ter centenas ou milhares de páginas.</p></div><div class="flow-step reveal" style="transition-delay:0.08s"><span class="n">2</span><h3>Capturas em paralelo</h3><p>Vários navegadores trabalham ao mesmo tempo, com revezamento entre os lotes. O progresso aparece em tempo real.</p></div><div class="flow-step reveal" style="transition-delay:0.16s"><span class="n">3</span><h3>Receba pronto</h3><p>Prints em imagem e PDF no painel ou direto no seu sistema pelo MatrixLink.</p></div></div></div></section><section class="section"><div class="container split"><div class="reveal"><span class="tag">screenshot</span><h2>Um print que vale como comprovação.</h2><p class="lead">A captura mostra a página como o leitor viu: carregada, com as imagens no lugar e sem o aviso de cookies cobrindo o texto.</p><ul class="ticks2"><li>Screenshot da página inteira</li><li>Versão desktop e celular</li><li>Pop-ups de cookies fechados antes da captura</li><li>Espera imagens e anúncios carregarem</li><li>Nova tentativa automática se a página estiver lenta</li><li>Progresso do lote em tempo real</li><li>Aviso por e-mail ou webhook ao terminar</li><li>Prints em imagem e PDF</li></ul></div><div class="reveal" style="transition-delay:.1s"><div class="mock" style="min-height:auto;padding:18px;background:#fff;box-shadow:0 24px 60px rgba(15,18,30,.08)" aria-hidden="true"><div class="mock-bar"><i></i><i></i><i></i></div><div class="mock-card mock-row"><b>portalexemplo.com.br/economia/…</b><span class="mock-tag ok">print ok</span></div><div class="mock-card mock-row"><b>gazetamodelo.com.br/politica/…</b><span class="mock-tag ok">print ok</span></div><div class="mock-card mock-row"><b>radiomodelo.com.br/noticias/…</b><span class="mock-tag">nova tentativa</span></div><div class="mock-card mock-row"><b>folhademo.com.br/cidades/…</b><span class="mock-tag ok">print ok</span></div></div></div></div></section>
+<section class="section section-alt" id="perguntas"><div class="container reveal"><div class="section-head"><div><span class="tag">perguntas</span><h2>Sobre o MatrixShot.</h2></div></div><div class="faq">
+      <details><summary>O que é o MatrixShot?</summary><p>É a ferramenta de print e screenshot em lote da Matrix Clipping: você envia vários links de uma vez e recebe a captura de cada página, sem abrir uma por uma.</p></details>
+      <details><summary>Como envio os links?</summary><p>Cole a lista, envie uma planilha ou mande pela MatrixAPI a partir do seu sistema.</p></details>
+      <details><summary>O screenshot sai da página inteira?</summary><p>Sim. Você escolhe página inteira ou área visível, versão desktop ou celular. As medidas da captura saem pelo MatrixMeter.</p></details>
+      <details><summary>E se uma página estiver fora do ar?</summary><p>O MatrixShot tenta de novo sozinho. Se ainda assim não der certo, o link fica marcado no lote e não trava o resto.</p></details>
+      <details><summary>Lotes diferentes disputam a fila?</summary><p>Não. Os lotes são processados com revezamento, e cada conta tem a sua capacidade de prints simultâneos. O lote menor não espera o maior.</p></details>
+      <details><summary>Em que formato recebo os prints?</summary><p>Imagem e PDF, e também pela MatrixAPI e pelo MatrixLink (webhook, SFTP ou e-mail).</p></details>
+    </div></div></section>
+<section class="section"><div class="container"><div class="section-head reveal"><div><span class="tag">outras ferramentas</span><h2>Funciona ainda melhor junto.</h2></div></div><div class="prods"><a class="prod reveal" href="../matrixmeter/index.html" style="transition-delay:0.00s"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17 17 3l4 4L7 21z"/><path d="m7 13 2 2M10 10l2 2M13 7l2 2"/></svg></div><h3>MatrixMeter</h3><p>Altura, largura e centimetragem de qualquer área da página, em segundos.</p><span class="prod-go">Conhecer &rarr;</span></a><a class="prod reveal" href="../matrixdoc/index.html" style="transition-delay:0.06s"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 10h10M4 14h16M4 18h8"/></svg></div><h3>MatrixDoc</h3><p>Envie um PDF ou Excel e receba JSON, INSERT para o seu banco, envio por API ou um relatório sob medida.</p><span class="prod-go">Conhecer &rarr;</span></a><a class="prod reveal" href="../matrixapi/index.html" style="transition-delay:0.12s"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M15 8l2 2"/></svg></div><h3>MatrixAPI</h3><p>Todas as ferramentas da Matrix dentro do seu sistema, com token e respostas em JSON.</p><span class="prod-go">Conhecer &rarr;</span></a><a class="prod reveal" href="../matrixlink/index.html" style="transition-delay:0.18s"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg></div><h3>MatrixLink</h3><p>O resultado chega sozinho onde a sua equipe já trabalha: webhook, SFTP ou e-mail.</p><span class="prod-go">Conhecer &rarr;</span></a></div></div></section>
+<section class="section" style="padding-top:20px">
+  <div class="container reveal">
+    <div class="final">
+      <span class="tag" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#ffb48a">matrix clipping</span>
+      <h2 style="margin-top:16px">A ferramenta certa muda o ritmo da operação.</h2>
+      <p>MatrixShot, MatrixMeter, MatrixDoc, MatrixAPI e MatrixLink: menos trabalho manual, mais entrega para a sua equipe.</p>
+      <div class="cta-row"><a class="btn btn-primary" href="../cadastro/index.html">Criar conta</a><a class="btn btn-glass" href="mailto:ferramentamatrix@gmail.com?subject=Quero%20conhecer%20a%20Matrix%20Clipping">Falar com a gente</a></div>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-row">
+      <a class="logo" href="../index.html" aria-label="Página inicial">
+        <img src="../assets/img/logo.png" srcset="../assets/img/logo.png 1x, ../assets/img/logo@2x.png 2x" alt="Matrix Clipping" width="460" height="120">
+      </a>
+      <nav class="footer-links" aria-label="Rodapé">
+        <a href="../matrixshot/index.html">MatrixShot</a>
+        <a href="../matrixmeter/index.html">MatrixMeter</a>
+        <a href="../matrixdoc/index.html">MatrixDoc</a>
+        <a href="../matrixapi/index.html">MatrixAPI</a>
+        <a href="../matrixlink/index.html">MatrixLink</a>
+        <a href="../entrar/index.html">Entrar</a>
+        <a href="../cadastro/index.html">Criar conta</a>
+        <a data-email href="#">ferramentamatrix@gmail.com</a>
+      </nav>
+    </div>
+    <div class="copy">© <span data-year>2026</span> Matrix Clipping · ferramentas para clipping</div>
+  </div>
+</footer>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

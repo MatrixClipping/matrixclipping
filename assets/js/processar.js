@@ -10,8 +10,7 @@
   var C = window.MC_CONFIG || {};
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
-  var STEPS = ['fila', 'leitura', 'extracao', 'print', 'medidas', 'retorno', 'sentimento', 'veiculo'];
-  var SENT = { positivo: 'Positivo', negativo: 'Negativo', neutro: 'Neutro' };
+  var STEPS = ['fila', 'leitura', 'extracao', 'print', 'medidas', 'retorno'];
   var lastResult = null, running = false;
 
   function U() { return window.MC || {}; }
@@ -35,30 +34,22 @@
     lastResult = d;
     $('#emptyState').hidden = true;
     $('#resultContent').hidden = false;
-    $('#rVeiculo').textContent = (d.veiculo || '') + (d.fonte ? ' · ' + d.fonte : '');
-    $('#rTitulo').textContent = d.titulo || '';
-    $('#rMeta').textContent = [d.data, d.secao, d.autor ? 'Por ' + d.autor : ''].filter(Boolean).join(' · ');
-    var s = (d.sentimento || 'neutro').toLowerCase();
-    var pill = $('#rSent'); pill.className = 'pill ' + s; pill.textContent = SENT[s] || s;
-    $('#rRetorno').textContent = d.retornoMidia || '—';
-    $('#rCm').textContent = d.centimetragem || '—';
-    $('#rPx').textContent = num.format(d.larguraPx || 0) + ' × ' + num.format(d.alturaPx || 0) + ' px';
-    $('#rDims').textContent = 'Print recortado · ' + (d.larguraPx || 0) + ' × ' + (d.alturaPx || 0) + ' px';
-    $('#rConf').textContent = Math.round((d.confianca || 0) * 100) + '%';
-    $('#rTexto').textContent = d.texto || '';
-    $('#rJust').textContent = d.justificativa || '';
-    var m = d.metricas || (C.demoExample && C.demoExample.metricas) || [];
-    $('#rMetricas').innerHTML = m.map(function (p) {
-      var e = U().esc || String;
-      return '<div class="metric"><small>' + e(p[0]) + '</small><b>' + e(p[1]) + '</b></div>';
-    }).join('');
+    function txt(sel, v) { var e = $(sel); if (e) e.textContent = v; }
+    txt('#rVeiculo', (d.veiculo || '') + (d.fonte ? ' · ' + d.fonte : ''));
+    txt('#rTitulo', d.titulo || '');
+    txt('#rMeta', [d.data, d.secao, d.autor ? 'Por ' + d.autor : ''].filter(Boolean).join(' · '));
+    txt('#rRetorno', d.retornoMidia || '—');
+    txt('#rCm', d.centimetragem || '—');
+    txt('#rPx', num.format(d.larguraPx || 0) + ' × ' + num.format(d.alturaPx || 0) + ' px');
+    txt('#rDims', 'Print recortado · ' + (d.larguraPx || 0) + ' × ' + (d.alturaPx || 0) + ' px');
+    txt('#rTexto', d.texto || '');
   }
 
   // ---------------------------------------------------------
   // MODO DEMONSTRAÇÃO
   // ---------------------------------------------------------
   async function runDemo(url) {
-    var times = [400, 900, 800, 900, 500, 600, 700, 600];
+    var times = [400, 900, 800, 900, 500, 600];
     $('#jobMeta').textContent = 'Link: ' + url.replace(/^https?:\/\//, '');
     for (var i = 0; i < STEPS.length; i++) {
       setStep(STEPS[i], 'run', 'processando…');
@@ -132,7 +123,7 @@
       }
       input.setCustomValidity('');
       history.replaceState(null, '', '?url=' + encodeURIComponent(url));
-      start(url, $('#procCliente').value.trim());
+      start(url, '');
     });
     input.addEventListener('input', function () { input.setCustomValidity(''); });
 

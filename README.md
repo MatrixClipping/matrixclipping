@@ -7,14 +7,15 @@ igual no GitHub Pages, Cloudflare Pages, Netlify ou qualquer hospedagem de arqui
 
 | Página               | O que é |
 |----------------------|---------|
-| `index.html`         | Home: demonstração automática, print em lote, explorador da plataforma, retorno de mídia, controle, perguntas |
-| `plataforma/`        | Todos os módulos da central e a API (página para busca: "ferramenta de clipping") |
-| `print-em-lote/`     | Print em lote e screenshot de notícias (página para busca: "print em lote") |
+| `index.html`         | Home: demonstração, as cinco ferramentas, MatrixMeter e MatrixDoc interativos, perguntas |
+| `plataforma/`        | Todas as ferramentas |
+| `matrixshot/`        | MatrixShot: print e screenshot em lote |
+| `matrixmeter/`       | MatrixMeter: altura, largura e centimetragem (demo interativa) |
+| `matrixdoc/`         | MatrixDoc: PDF e Excel para JSON, INSERT, API ou relatório (demo interativa) |
+| `matrixapi/`         | MatrixAPI: endpoints e segurança |
+| `matrixlink/`        | MatrixLink: entrega por webhook, SFTP e e-mail |
+| `print-em-lote/`     | Endereço antigo: redireciona para `matrixshot/` |
 | `precos/`            | Endereço antigo: redireciona para `plataforma/` |
-| `processar/`         | Tela da plataforma: processa um link (recebe `?url=` vindo da home) |
-| `cadastro/`          | Criar conta |
-| `entrar/`            | Login |
-| `404.html`           | Página não encontrada |
 
 ## Estrutura
 

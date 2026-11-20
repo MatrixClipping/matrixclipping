@@ -29,12 +29,14 @@
 <header class="site-header">
   <div class="container header-inner">
     <a class="logo" href="../index.html" aria-label="Página inicial">
-      <img src="../assets/img/logo.png" srcset="../assets/img/logo.png 1x, ../assets/img/logo@2x.png 2x" alt="Matrix Clipping, ferramenta de clipping" width="460" height="120">
+      <img src="../assets/img/logo.png" srcset="../assets/img/logo.png 1x, ../assets/img/logo@2x.png 2x" alt="Matrix Clipping" width="460" height="120">
     </a>
     <nav class="nav" aria-label="Principal">
-      <a href="../plataforma/index.html">Plataforma</a>
-      <a href="../print-em-lote/index.html">Print em lote</a>
-      <a href="../index.html#retorno">Retorno de mídia</a>
+      <div class="nav-drop"><a href="../plataforma/index.html" aria-haspopup="true">Ferramentas <span aria-hidden="true">▾</span></a>
+        <div class="drop"><a href="../matrixshot/index.html"><b>MatrixShot</b><small>Print e screenshot em lote</small></a><a href="../matrixmeter/index.html"><b>MatrixMeter</b><small>Altura, largura e centimetragem</small></a><a href="../matrixdoc/index.html"><b>MatrixDoc</b><small>PDF e Excel para dados e relatórios</small></a><a href="../matrixapi/index.html"><b>MatrixAPI</b><small>As ferramentas no seu sistema</small></a><a href="../matrixlink/index.html"><b>MatrixLink</b><small>Entrega por webhook, SFTP e e-mail</small></a><a class="drop-all" href="../plataforma/index.html">Ver todas as ferramentas →</a></div></div>
+      <a href="../matrixshot/index.html">MatrixShot</a>
+      <a href="../matrixdoc/index.html">MatrixDoc</a>
+      <a href="../matrixapi/index.html">MatrixAPI</a>
       <a href="../index.html#perguntas">Perguntas</a>
     </nav>
     <div class="header-actions">
@@ -46,11 +48,10 @@
     </div>
   </div>
   <nav class="mobile-nav" id="mobileNav" aria-label="Menu móvel" hidden>
-    <a href="../plataforma/index.html">Plataforma</a>
-    <a href="../print-em-lote/index.html">Print em lote</a>
-    <a href="../index.html#retorno">Retorno de mídia</a>
+    <span class="mn-lbl">Ferramentas</span>
+    <a href="../matrixshot/index.html">MatrixShot</a><a href="../matrixmeter/index.html">MatrixMeter</a><a href="../matrixdoc/index.html">MatrixDoc</a><a href="../matrixapi/index.html">MatrixAPI</a><a href="../matrixlink/index.html">MatrixLink</a>
+    <a href="../plataforma/index.html">Todas as ferramentas</a>
     <a href="../index.html#perguntas">Perguntas</a>
-    <a href="../entrar/index.html">Entrar</a>
   </nav>
 </header>
 
@@ -84,10 +85,10 @@
     </section>
     <aside class="auth-side">
       <span class="tag">matrix clipping</span>
-      <h2>Clipping em escala, do link ao relatório.</h2>
+      <h2>Ferramentas para clipping, feitas para escala.</h2>
       <ul class="ticks">
-        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg> MatrixShot: print em lote</li>
-        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg> MatrixPress: a central de clipping</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg> MatrixShot e MatrixMeter</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg> MatrixDoc</li>
         <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg> MatrixAPI e MatrixLink</li>
       </ul>
     </aside>
@@ -97,18 +98,20 @@
   <div class="container">
     <div class="footer-row">
       <a class="logo" href="../index.html" aria-label="Página inicial">
-        <img src="../assets/img/logo.png" srcset="../assets/img/logo.png 1x, ../assets/img/logo@2x.png 2x" alt="Matrix Clipping, ferramenta de clipping" width="460" height="120">
+        <img src="../assets/img/logo.png" srcset="../assets/img/logo.png 1x, ../assets/img/logo@2x.png 2x" alt="Matrix Clipping" width="460" height="120">
       </a>
       <nav class="footer-links" aria-label="Rodapé">
-        <a href="../plataforma/index.html">MatrixPress · ferramenta de clipping</a>
-        <a href="../print-em-lote/index.html">MatrixShot · print em lote</a>
-        <a href="../index.html#retorno">Retorno de mídia</a>
+        <a href="../matrixshot/index.html">MatrixShot</a>
+        <a href="../matrixmeter/index.html">MatrixMeter</a>
+        <a href="../matrixdoc/index.html">MatrixDoc</a>
+        <a href="../matrixapi/index.html">MatrixAPI</a>
+        <a href="../matrixlink/index.html">MatrixLink</a>
         <a href="../entrar/index.html">Entrar</a>
         <a href="../cadastro/index.html">Criar conta</a>
         <a data-email href="#">ferramentamatrix@gmail.com</a>
       </nav>
     </div>
-    <div class="copy">© <span data-year>2026</span> Matrix Clipping · MatrixPress, MatrixShot, MatrixAPI e MatrixLink · ferramenta de clipping, print em lote e automação para clipping</div>
+    <div class="copy">© <span data-year>2026</span> Matrix Clipping · ferramentas para clipping</div>
   </div>
 </footer>
 <script src="../assets/js/config.js"></script>
